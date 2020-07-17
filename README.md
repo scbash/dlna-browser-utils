@@ -43,7 +43,7 @@ where the parameters are as follows:
   result of the search will be in the result object. The result
   object is as described below.
 
-The options object can optionally conaint the following elements:
+The options object can optionally contain the following elements:
 
 * browseFlag - flag passed to server for browsing.  Default is
   'BrowseDirectChildren'.
@@ -57,6 +57,15 @@ The options object can optionally conaint the following elements:
   are more than this number of results the result will only
   contain the first requestCount results.
 * sort - uPnP sort order.  Default is '' for no sort.
+* customFields - additional details to extract from the DLNA result.  Object (map) of output
+  field name to DLNA result, for example:
+  ```javascript
+  {
+    albumArt: 'upnp:albumArtURI'
+  }
+  ```
+  will add an "albumArt" field to each container and item that has a "upnp:albumArtURI" in the DLNA response. By default this will fail silently if the field is not in the DLNA response.  See debugCustomFields below.
+* debugCustomFields - log each missing field for each DLNA item (can be very verbose!). Default is false.
 
 The result object has two fields each of which is an array.
 These fields are:
@@ -71,6 +80,7 @@ The objects in the container array have the following fields:
 * childCount - number of children in the container.
 * searchable - indicates if the container is searchable.
 * title - title of the container.
+* Any custom fields specified in the options object.
 
 The objects in the item array have the following fields:
 
@@ -79,6 +89,7 @@ The objects in the item array have the following fields:
 * title - title of the item.
 * res - the dlna resource link for the item.
 * contentType - the content type for the item.
+* Any custom fields specified in the options object.
 
 ## Example Usage
 
